@@ -1,4 +1,4 @@
-function off2vox_batch(off_filelist, volume_size, pad_size, output_dir)
+function off2vox_batch(off_filelist, volume_size, pad_size, output_dir, visu)
 % OFF2VOX_BATCH, convert a list of .obj models to volumes and save them to .mat files
 %   off_filelist: string, path for a txt file each line is 
 %       the full path for an OBJ model
@@ -32,7 +32,7 @@ for k = 1:length(off_filenames)
         theta = 0; 
         off_filename = off_filenames{k}; % ../data/modelnet40_raw/ModelNet40/glass_box/test/glass_box_0181.off
         disp(off_filename);
-        instance = off2vox(off_filename, volume_size, pad_size, theta, 0); % 0 means not visualization 
+        instance = off2vox(off_filename, volume_size, pad_size, theta, visu); % 0 means not visualization 
 
         % make folder based on obj_filename 
         file_path_array = strsplit(off_filename,'/'); 
@@ -53,7 +53,7 @@ for k = 1:length(off_filenames)
         off_filename = off_filenames{k};
         for kk = 1:num_rots
             theta =  2 * pi * (kk-1) / num_rots; % rotate around z axis 
-            instance = off2vox(off_filename, volume_size, pad_size, theta, 1); % 1 means display
+            instance = off2vox(off_filename, volume_size, pad_size, theta, visu); % 1 means display
             file_path_array = strsplit(off_filename,'/'); 
             store_subfolder = fullfile(output_dir, file_path_array{5}, file_path_array{6}, num2str(volume_size));
             if ~exist(store_subfolder, 'dir')
